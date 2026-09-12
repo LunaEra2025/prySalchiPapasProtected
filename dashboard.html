@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - SalchiPapas</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <h2>🌭 Bienvenido a SalchiPapas</h2>
+    <p id="bienvenida">Cargando...</p>
+    <button class="btn-logout" onclick="cerrarSesion()">Cerrar Sesión</button>
+  </div>
+
+  <script>
+    fetch('php/session.php')
+      .then(res => res.json())
+      .then(data => {
+        if (!data.logueado) {
+          window.location.href = 'index.html';
+        } else {
+          document.getElementById('bienvenida').textContent =
+            `Hola, ${data.usuario}. Has iniciado sesión correctamente.`;
+        }
+      })
+      .catch(() => window.location.href = 'index.html');
+
+    function cerrarSesion() {
+      window.location.href = 'php/logout.php';
+    }
+  </script>
+</body>
+</html>
