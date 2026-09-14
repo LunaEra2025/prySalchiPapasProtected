@@ -1,0 +1,1 @@
+SELECT '¡ola profe no me repruebe!' AS Mensaje;
