@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        input[type="submit"] {
+            width: auto;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <form action="submit.php" method="post">
+        <label for="name">姓名:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="email">电子邮件:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="message">留言:</label><br>
+        <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
+
+        <input type="submit" value="提交">
+        <script>
+            document.querySelector('form').addEventListener('submit', function(event) {
+                event.preventDefault(); // 阻止表单默认提交行为
+
+                // 获取表单数据
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+
+                // 创建一个对象来存储表单数据
+                const formData = {
+                    name: name,
+                    email: email,
+                    message: message
+                };
+
+                // 将表单数据转换为JSON字符串
+                const jsonData = JSON.stringify(formData);
+
+                // 发送AJAX请求
+                fetch('submit.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: jsonData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    alert('提交成功！');
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    alert('提交失败，请重试。');
+                });
+            });     
+        </script>
+</body>
+</html>
